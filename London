@@ -1,0 +1,22 @@
+const ethers = require('ethers');
+
+// Connect to the network
+let provider = ethers.getDefaultProvider('ropsten');
+
+// The address that the Contract WILL have once mined
+let contractAddress = "your_contract_address_here";
+
+// The ABI (interface)
+let abi = [ "function get() view returns (uint)", "function set(uint)" ];
+
+// Init contract
+let contract = new ethers.Contract(contractAddress, abi, provider);
+
+// Call the contract's 'get' function
+let value = await contract.get();
+console.log('Stored value in Remix contract:', value.toString());
+
+// Set a new value (only works if you're the contract owner)
+let newValue = 7;
+let tx = await contract.set(newValue);
+await tx.wait();
